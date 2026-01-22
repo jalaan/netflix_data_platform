@@ -1,8 +1,8 @@
 # End-to-End “Netflix-style” Data Platform
 
-This project simulates a **production-grade analytics data platform** inspired by Netflix-scale architectures. It demonstrates how raw behavioral events can be transformed into analytics-ready datasets, monitored through orchestration, and consumed via dashboards — using modern data engineering and analytics engineering best practices.
+This project simulates a **production-grade analytics data platform** inspired by Netflix-scale architectures. It demonstrates how raw behavioral events are ingested, transformed, tested, orchestrated, and surfaced through analytics-ready datasets and dashboards.
 
-The goal of this project is to showcase **end-to-end ownership** of a data platform: from ingestion and storage to transformation, testing, orchestration, and analytics delivery.
+The project is designed to reflect **real-world data engineering and analytics engineering workflows** used at companies like Netflix, Meta, Stripe, and other data-driven organizations.
 
 ---
 
@@ -20,107 +20,85 @@ The goal of this project is to showcase **end-to-end ownership** of a data platf
 
 ## Tech Stack
 
-- **Python** — event generation, ingestion, orchestration logic
-- **DuckDB** — analytical warehouse
-- **dbt** — transformations, tests, analytics models
-- **Dagster** — pipeline orchestration and visualization
-- **Streamlit** — analytics dashboard
-- **Parquet** — data lake storage format
+- **Python** — event generation, ingestion, orchestration logic  
+- **DuckDB** — analytical warehouse  
+- **dbt** — transformations, tests, analytics models  
+- **Dagster** — pipeline orchestration and monitoring  
+- **Streamlit** — analytics dashboard  
+- **Parquet** — data lake storage format  
 
 ---
 
 ## Architecture Overview
 
 ### 1. Event Generation
-Synthetic Netflix-style watch events are generated using Python.  
-Events include users, titles, timestamps, and engagement metrics to simulate real-world streaming behavior.
+Synthetic Netflix-style watch events are generated using Python, simulating user engagement with streaming content.
 
 ### 2. Data Lake
-Raw events are written to a partitioned Parquet-based data lake.  
-Data is organized by `event_date` to support scalable analytics patterns.
+Raw events are written to a partitioned Parquet-based data lake, organized by `event_date` for scalable querying.
 
 ### 3. Warehouse
-Data is loaded into **DuckDB**, serving as a lightweight analytical warehouse.  
-Raw tables are created for users, titles, and events.
+Data is loaded into DuckDB, serving as a lightweight analytical warehouse with raw tables for users, titles, and events.
 
 ### 4. Analytics Engineering (dbt)
-Transformations are handled using dbt with a layered approach:
-- **Staging models** clean and standardize raw data
-- **Fact and dimension tables** model user behavior and content consumption
-- **Marts** expose business-ready KPIs
-- **Tests** ensure data validity and pipeline reliability
+Transformations follow a layered dbt architecture:
+- **Staging models** clean and standardize raw data  
+- **Fact and dimension tables** model user behavior and content consumption  
+- **Marts** expose business-ready KPIs  
+- **Tests** enforce data quality and pipeline reliability  
 
 ### 5. Orchestration & Monitoring
-Dagster orchestrates the full pipeline, coordinating ingestion, loading, and transformations.  
-Pipeline runs are audited and tracked to support observability and health monitoring.
+Dagster orchestrates the full pipeline, coordinating ingestion, loading, and transformations. Pipeline runs are tracked via audit tables to support observability and debugging.
 
-### 6. Dashboard
-A Streamlit dashboard provides visibility into key metrics, trends, and top-performing titles.
+### 6. Analytics Dashboard
+A Streamlit dashboard visualizes KPIs, engagement trends, and top-performing titles.
 
 ---
 
 ## Screenshots
 
 ### Streamlit Dashboard
-![Dashboard](assets/screenshots/dashboard.png)
+![Dashboard](assets/dashboard.png)
 
 ### dbt Build (Models + Tests)
-![dbt build](assets/screenshots/dbt-build.png)
+![dbt build](assets/dbt-build.png)
 
 ### Dagster Orchestration Graph
-![Dagster](assets/screenshots/dagster-orchestration.png)
+![Dagster](assets/dagster-orchestration.png)
 
 ### Project Structure
-![Structure](assets/screenshots/project-structure.png)
+![Structure](assets/project-structure.png)
 
 ### Pipeline Health & Audit History
-![Pipeline Health](assets/screenshots/pipeline-health.png)
+![Pipeline Health](assets/pipeline-health.png)
 
 ---
 
 ## Key Data Models
 
-- **stg_events / stg_users / stg_titles** — cleaned staging models
-- **fct_watch** — fact table capturing watch behavior
-- **dim_user / dim_title** — dimension tables
-- **mart_daily_kpis** — daily engagement metrics
-- **mart_top_titles** — top-performing content
-- **audit_pipeline_runs** — pipeline execution history
+- **stg_events / stg_users / stg_titles** — cleaned staging models  
+- **fct_watch** — fact table capturing user watch behavior  
+- **dim_user / dim_title** — dimension tables  
+- **mart_daily_kpis** — daily engagement metrics  
+- **mart_top_titles** — top-performing content  
+- **audit_pipeline_runs** — pipeline execution history  
 
 ---
 
 ## Why This Project Matters
 
-This project mirrors how modern data teams operate at scale:
+This project reflects how modern analytics teams operate at scale:
 
-- SQL-first analytics modeling
-- Strong separation of concerns between raw, transformed, and business data
-- Automated testing and data quality checks
-- Orchestration with visibility into pipeline execution
-- Analytics delivered through consumable dashboards
+- SQL-first analytics engineering  
+- Production-style data modeling and testing  
+- End-to-end pipeline orchestration with observability  
+- Clear ownership of data from ingestion through analytics delivery  
 
-It demonstrates the ability to **design, build, and reason about data platforms**, not just write isolated scripts.
+It demonstrates the ability to **design, build, and reason about analytics platforms**, not just write isolated scripts or dashboards.
 
 ---
 
-## How to Run Locally (Optional)
+## Author
 
-```bash
-# activate environment
-source venv/bin/activate
-
-# generate events
-python src/generate_events.py
-
-# ingest into data lake
-python src/ingest_to_lake.py
-
-# load into warehouse
-python src/load_to_duckdb.py
-
-# run dbt models
-cd dbt/netflix_analytics
-dbt build
-
-# launch dashboard
-streamlit run dashboard/app.py
+Built by **Jalaan Fields**  
+Focused on data engineering, analytics engineering, and production-grade data platforms.
